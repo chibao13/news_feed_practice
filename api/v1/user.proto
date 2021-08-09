@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+
+package user;
+option go_package = "github.com/chibao13/news_feed_practice/api/v1/user";
+
+service UserRPC{
+  rpc FindUser(UserIdRequest) returns (FindUserResponse) {}
+  rpc GetListFriends(UserIdRequest) returns(ListFriendIdsResponse){}
+  //rpc Authentication(UserIdRequest) returns (FindUserResponse){}
+}
+
+message UserIdRequest{
+  map<string,string> conditions = 1;
+}
+
+message FindUserResponse{
+  uint32 id = 1;
+  int32 status = 2;
+  string email = 3;
+}
+message ListFriendIdsResponse{
+  repeated uint32 ids = 1;
+}
