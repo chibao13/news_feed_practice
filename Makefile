@@ -1,6 +1,6 @@
 # START: compile
 compile:
-	protoc api/v1/*.proto api/v1/userfriend/*.proto \
+	protoc api/v1/*.proto api/v1/userfriend/*.proto api/v1/post/*.proto\
 		--go_out=. \
 		--go-grpc_out=. \
 		--go_opt=paths=source_relative \

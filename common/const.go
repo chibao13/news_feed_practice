@@ -20,7 +20,10 @@ const (
 	//PortGRPCUAuthenService = ":50051"
 	PortgRPCUserFriendService = ":50052"
 	HostgRPCUserFriendService = "localhost" + PortgRPCUserFriendService
-	PortGinPostService        = ":8082"
+	//PortGinPostService        = ":8082"
+
+	PortgRPCPostService = ":50051"
+	HostgRPCPostService = "localhost" + PortgRPCPostService
 )
 
 type Requester interface {
