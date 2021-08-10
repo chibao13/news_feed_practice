@@ -13,11 +13,14 @@ const (
 )
 
 const (
-	PortGRPCUserService = ":50051"
-	HostRPCUserService  = "localhost" + PortGRPCUserService
-	PortGinUserService  = ":8081"
+	//PortGRPCUserService = ":50051"
+	//HostRPCUserService  = "localhost" + PortGRPCUserService
+	//PortGinUserService  = ":8081"
 
-	PortGinPostService = ":8082"
+	//PortGRPCUAuthenService = ":50051"
+	PortgRPCUserFriendService = ":50052"
+	HostgRPCUserFriendService = "localhost" + PortgRPCUserFriendService
+	PortGinPostService        = ":8082"
 )
 
 type Requester interface {

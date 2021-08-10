@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+
+package userfriend;
+option go_package = "github.com/chibao13/news_feed_practice/api/v1/userfriend";
+
+
+
+
+service UserFriendRPC{
+  rpc GetListFriends(ConditionRequest) returns(ListFriendIdsResponse){}
+  //rpc Authentication(UserIdRequest) returns (FindUserResponse){}
+}
+
+
+message ConditionRequest{
+  map<string,string> conditions = 1;
+}
+
+message ListFriendIdsResponse{
+  repeated uint32 ids = 1;
+}

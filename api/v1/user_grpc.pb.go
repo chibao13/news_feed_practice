@@ -19,7 +19,6 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserRPCClient interface {
 	FindUser(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*FindUserResponse, error)
-	GetListFriends(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*ListFriendIdsResponse, error)
 }
 
 type userRPCClient struct {
@@ -39,21 +38,11 @@ func (c *userRPCClient) FindUser(ctx context.Context, in *UserIdRequest, opts ..
 	return out, nil
 }
 
-func (c *userRPCClient) GetListFriends(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*ListFriendIdsResponse, error) {
-	out := new(ListFriendIdsResponse)
-	err := c.cc.Invoke(ctx, "/user.UserRPC/GetListFriends", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // UserRPCServer is the server API for UserRPC service.
 // All implementations must embed UnimplementedUserRPCServer
 // for forward compatibility
 type UserRPCServer interface {
 	FindUser(context.Context, *UserIdRequest) (*FindUserResponse, error)
-	GetListFriends(context.Context, *UserIdRequest) (*ListFriendIdsResponse, error)
 	mustEmbedUnimplementedUserRPCServer()
 }
 
@@ -63,9 +52,6 @@ type UnimplementedUserRPCServer struct {
 
 func (UnimplementedUserRPCServer) FindUser(context.Context, *UserIdRequest) (*FindUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindUser not implemented")
-}
-func (UnimplementedUserRPCServer) GetListFriends(context.Context, *UserIdRequest) (*ListFriendIdsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetListFriends not implemented")
 }
 func (UnimplementedUserRPCServer) mustEmbedUnimplementedUserRPCServer() {}
 
@@ -98,24 +84,6 @@ func _UserRPC_FindUser_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserRPC_GetListFriends_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserRPCServer).GetListFriends(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user.UserRPC/GetListFriends",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserRPCServer).GetListFriends(ctx, req.(*UserIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // UserRPC_ServiceDesc is the grpc.ServiceDesc for UserRPC service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -126,10 +94,6 @@ var UserRPC_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindUser",
 			Handler:    _UserRPC_FindUser_Handler,
-		},
-		{
-			MethodName: "GetListFriends",
-			Handler:    _UserRPC_GetListFriends_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
